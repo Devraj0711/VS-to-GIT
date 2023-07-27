@@ -3,6 +3,9 @@ const http= require('http');
 const server= http.createServer(function(req,res)
 {
      console.log(req);
+     console.log("Devraj");
 });
-
-server.listen(3000);
+const port=4000;
+server.listen(port, () =>{
+     console.log("Devraj")
+});
