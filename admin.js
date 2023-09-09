@@ -1,18 +1,37 @@
-const express = require('express');
+const Product = require('../models/product');
 
-const router= express.Router();
+exports.getAddProduct = (req, res, next) => {
+  res.render('admin/add-product', {
+    pageTitle: 'Add Product',
+    path: '/admin/add-product',
+    formsCSS: true,
+    productCSS: true,
+    activeAddProduct: true
+  });
+};
 
-// /admin/add-product ==>get
-router.get('/add-product',(req,res,next)=> {
-    res.send(
-        '<form action="/admin-product" method="POST"><label>Enter Name</label><input type="text" name="title"> <label>Enter Size</label><input type="number" name="size"><button type="submit">Add Product</button></form>'
-        );
-});
-
-// /admin/add-product ==>POST
-router.post('/add-product', (req, res, next) =>{
-    console.log(req.body);
+exports.postAddProduct = (req, res, next) => {
+  const title = req.body.title;
+  const imageUrl = req.body.imageUrl;
+  const price = req.body.price;
+  const description = req.body.description;
+  const product = new Product(null, title, imageUrl, price,  description);
+  //working with DB commands
+  product
+  .save()
+  .then(()=>{
     res.redirect('/');
-});
+  })
+  .catch(err => console.log(err));
+  
+};
 
-module.exports =router;
+exports.getProducts = (req, res, next) => {
+  Product.fetchAll(products => {
+    res.render('admin/products', {
+      prods: products,
+      pageTitle: 'Admin Products',
+      path: '/admin/products'
+    });
+  });
+};
