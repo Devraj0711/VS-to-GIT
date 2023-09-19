@@ -15,13 +15,21 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  
-  Product.create({
+  req.user
+  .createProduct({
+      title: title,
+      price: price,
+      imageUrl: imageUrl,
+      description: description
+  })
+  /** further simplifing code to include association  
+    Product.create({
     title: title,
     price: price,
     imageUrl: imageUrl,
-    description: description
-  })
+    description: description,
+    // manually setting to associate User and Product table  //userId: req.user.id 
+  })**/
   .then(result => {
     console.log(result);
     res.redirect('/'); // Redirect to a success page or wherever appropriate
@@ -33,7 +41,8 @@ exports.postAddProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  req.user
+  .getProducts()
   .then(products => {
     res.render('admin/products', {
       prods: products,
@@ -49,9 +58,13 @@ exports.getEditProduct = (req, res, next) => {
   if (!editMode) {
     return res.redirect('/');
   }
+  // adding associaton statements
   const prodId = req.params.productId;
-  Product.findById(prodId)
+  req.user
+  .getProducts({where: {id: prodId}})
+ //Product.findById(prodId)
     .then(product => {
+      const product= products[0];
       if (!product) {
         return res.redirect('/');
       }
