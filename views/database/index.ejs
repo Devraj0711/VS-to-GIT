@@ -1,0 +1,25 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+<%- include('../includes/navigation.ejs') %>
+<main>
+    <div class="grid">
+        <% if (prods.length > 0) { %>
+            <% for (let product of prods) { %>
+                <nav class="main-header__nav">
+                    <ul class="main-header__item-list">
+                        <li class="main-header__item">
+                            <a class="<%= path === '/tableName' ? 'active' : '' %>" href="/tablename">Table Name</a>
+                        </li>
+                    </ul>
+                </nav>
+            <% } %>
+        <% } else { %>
+            <h2>No table created!</h2>
+        <% } %>
+    </div>
+</main>
+<%- include('../includes/end.ejs') %>
+</body>

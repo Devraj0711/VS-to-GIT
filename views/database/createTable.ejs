@@ -1,0 +1,48 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+ 
+     <main>
+        <form class="table-form" action="/create" method="POST">
+            <div class="form-control">
+                <label for="tableName">Table Name:</label>
+                <input type="text" name="tableName" id="tableName" required>
+                <br>
+
+                <label for="columnName">Column Name:</label>
+                <input type="text" name="columnName" id="columnName"required>
+                <label for="columnType">Column Type:</label>
+                <input type="text" name="columnType" id="columnType" required>
+                <label for="columnProperty">allow Null:</label>
+                <input type="text" name="columnProperty" id="columnProperty" required>         
+                <div id="columnList"></div>
+                <button type="button" onclick="addRow()">Add Column</button>
+                
+
+                </div>
+
+  <button type="submit">Create Table</button>
+</form>
+</main>
+<script>
+    function addRow() {
+      const columnList = document.getElementById('columnList');
+      const newRow = document.createElement('div');
+  
+      newRow.innerHTML = `
+        <label for="columnName">Column Name:</label>
+        <input type="text" name="columnName" required>
+        <label for="columnType">Column Type:</label>
+        <input type="text" name="columnType" required>
+        <label for="columnProperty">allow Null:</label>
+        <input type="text" name="columnProperty" id="columnProperty" required>
+      `;
+  
+      columnList.appendChild(newRow);
+    }
+</script>
+</body>
